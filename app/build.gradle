@@ -25,11 +25,9 @@ android {
         }
 
 
-//        debug {
-//            proguardFile 'proguard-rules.txt'
-//            debuggable true
-//            testCoverageEnabled = true
-//        }
+        debug {
+            testCoverageEnabled = true
+        }
     }
 
     compileOptions {
@@ -49,9 +47,6 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
 
     //!! REMARK !!
     //add this library to work with Robolectric 3.0 when your API level >= 23.
@@ -75,7 +70,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
     testCompile 'org.robolectric:robolectric:3.0'
-    androidTestCompile 'org.robolectric:robolectric:3.0'
+
     compile 'com.android.support:recyclerview-v7:23.0.0'
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
@@ -91,23 +86,20 @@ dependencies {
 //start jacoco
 apply plugin: 'jacoco'
 
-//jacoco {
-//    toolVersion = "0.7.4.201502262128"
-//}
 
 def coverageSourceDirs = [
         'src/main/java'
 ]
 
-task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {
+task jacocoTestReport(type:JacocoReport, dependsOn: "testDebugUnitTest") {
     group = "Reporting"
 
     description = "Generate Jacoco coverage reports"
 
     classDirectories = fileTree(
-            dir: '../app/build/intermediates/classes/debug',
+            dir: './build/intermediates/classes/debug',
             includes: [
-                    'demo.thanhbc.com.popularmovies/**/*.class'
+                    'demo/thanhbc/com/popularmovies/**/*.class'
             ],
             excludes: ['**/R.class',
                        '**/R$*.class',
@@ -116,9 +108,8 @@ task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {
                        '**/Manifest*.*']
     )
 
-    additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files('../app/build/jacoco/testDebug.exec')
+    executionData = files("$buildDir/jacoco/testDebugUnitTest.exec")
 
     def renamedFilesMap = [:]
 
@@ -142,10 +133,10 @@ task jacocoTestReport(type:JacocoReport, dependsOn: "testDebug") {
         }
     }
 
-//    reports {
-//        xml.enabled = true
-//        html.enabled = true
-//    }
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
 
 }
 
