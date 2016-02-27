@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class Result {
     public Boolean adult;
     public String backdrop_path;
@@ -21,3 +20,5 @@ public class Result {
     public Float vote_average;
     public Integer vote_count;
 }
+
+

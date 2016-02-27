@@ -9,4 +9,5 @@ public class DiscoverMovie {
     public List<Result> results = new ArrayList<Result>();
     public Integer total_pages;
     public Integer total_results;
+
 }

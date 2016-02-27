@@ -14,8 +14,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import demo.thanhbc.com.popularmovies.R;
-import demo.thanhbc.com.popularmovies.pojo.Result;
 import demo.thanhbc.com.popularmovies.callbacks.OnItemInteraction;
+import demo.thanhbc.com.popularmovies.pojo.Result;
 
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> implements OnGridItemClickListener {

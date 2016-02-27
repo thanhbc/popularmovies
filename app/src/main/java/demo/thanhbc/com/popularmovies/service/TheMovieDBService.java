@@ -12,7 +12,7 @@ import demo.thanhbc.com.popularmovies.pojo.DiscoverMovie;
 
 
 public class TheMovieDBService {
-    private static final String THE_MOVIE_SERVICE_URL = "http://api.themoviedb.org/3/discover";
+    private static final String THE_MOVIE_SERVICE_URL = "http://api.themoviedb.org/3";
     public static final String API_KEY="cf3d601dd37998cdb8756384a969d34d";
 
     private MovieApi movieApi;
@@ -41,7 +41,11 @@ public class TheMovieDBService {
 
 
      public interface MovieApi{
-        @GET("/movie")
+        @GET("/discover/movie")
         Observable<DiscoverMovie> getMovies(@Query("sort_by") String sort,@Query("api_key") String api_key);
+
+         @GET("/search/movie")
+        Observable<DiscoverMovie> getSearchResult(@Query("query") String query, @Query("api_key") String api_key);
+
     }
 }

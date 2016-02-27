@@ -11,13 +11,19 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import demo.thanhbc.com.popularmovies.pojo.DiscoverMovie;
 import demo.thanhbc.com.popularmovies.presenters.MainFragmentPresenterImpl;
 import demo.thanhbc.com.popularmovies.presenters.MainPresenter;
 import demo.thanhbc.com.popularmovies.service.TheMovieDBService;
 import demo.thanhbc.com.popularmovies.views.MainView;
 import rx.Observable;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+
+import static org.junit.Assert.assertEquals;
 
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -76,4 +82,41 @@ public class MainPresenterTest {
 
     }
 
+    @Test
+    public void testPerformance_for_loop(){
+        List<Integer> data = new ArrayList<>();
+        for(int i =0 ; i < 100000; ++i){
+            data.add(i);
+        }
+        List<Integer> result = new ArrayList<>();
+
+        for(int i = 0,size  = data.size(); i < size; i++){
+            if(i%2==0){
+                result.add(i);
+            }
+        }
+
+        assertEquals(100000 / 2, result.size());
+    }
+
+    @Test
+    public void testPerformance_rx(){
+        List<Integer> data = new ArrayList<>();
+        for(int i=0;i < 100000; ++i){
+            data.add(i);
+        }
+
+        List<Integer> result = Observable.from(data)
+                .filter(new Func1<Integer, Boolean>() {
+                    @Override
+                    public Boolean call(Integer integer) {
+                        return integer % 2 ==0;
+                    }
+                })
+                .toList()
+                .toBlocking().first();
+
+        assertEquals(100000 / 2, result.size());
+
+    }
 }
